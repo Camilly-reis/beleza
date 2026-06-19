@@ -1,50 +1,165 @@
-const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
+const express = require("express");
+const sqlite3 = require("sqlite3").verbose();
+const cors = require("cors");
+
 const app = express();
 
+// Permitir requisições do Live Server
+app.use(cors());
+
+// Receber JSON
 app.use(express.json());
-app.use(express.static('public'));
 
-const db = new sqlite3.Database('./database.db');
+const db = new sqlite3.Database("./database.db");
 
-db.run(`CREATE TABLE IF NOT EXISTS atendimentos(
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-idade INTEGER,
-cidade TEXT,
-tipo_violencia TEXT,
-descricao TEXT,
-risco TEXT,
-status TEXT)`);
+// Criar tabela
+db.serialize(() => {
 
-app.post('/atendimentos',(req,res)=>{
- const {idade,cidade,tipo_violencia,descricao,risco}=req.body;
- db.run(`INSERT INTO atendimentos
- (idade,cidade,tipo_violencia,descricao,risco,status)
- VALUES(?,?,?,?,?,?)`,
- [idade,cidade,tipo_violencia,descricao,risco,'Pendente'],
- function(err){
-   if(err) return res.status(500).json(err);
-   res.json({id:this.lastID});
- });
+    db.run(`
+        CREATE TABLE IF NOT EXISTS atendimentos (
+
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+            idade INTEGER,
+
+            cidade TEXT,
+
+            tipo_violencia TEXT,
+
+            descricao TEXT,
+
+            risco TEXT,
+
+            status TEXT
+        )
+    `);
+
 });
 
-app.get('/atendimentos',(req,res)=>{
- db.all('SELECT * FROM atendimentos',[],(err,rows)=>{
-   if(err) return res.status(500).json(err);
-   res.json(rows);
- });
+// CREATE
+app.post("/atendimentos", (req, res) => {
+
+    const {
+        idade,
+        cidade,
+        tipo_violencia,
+        descricao,
+        risco
+    } = req.body;
+
+    db.run(
+        `
+        INSERT INTO atendimentos
+        (
+            idade,
+            cidade,
+            tipo_violencia,
+            descricao,
+            risco,
+            status
+        )
+        VALUES (?, ?, ?, ?, ?, ?)
+        `,
+        [
+            idade,
+            cidade,
+            tipo_violencia,
+            descricao,
+            risco,
+            "Pendente"
+        ],
+
+        function(err){
+
+            if(err){
+
+                console.log(err);
+
+                return res.status(500).json(err);
+            }
+
+            res.json({
+                sucesso:true,
+                id:this.lastID
+            });
+        }
+    );
+
 });
 
-app.put('/atendimentos/:id',(req,res)=>{
- db.run('UPDATE atendimentos SET status=? WHERE id=?',
- [req.body.status,req.params.id],
- ()=>res.json({ok:true}));
+// READ
+app.get("/atendimentos", (req, res) => {
+
+    db.all(
+        "SELECT * FROM atendimentos",
+        [],
+        (err, rows) => {
+
+            if(err){
+                return res.status(500).json(err);
+            }
+
+            res.json(rows);
+        }
+    );
+
 });
 
-app.delete('/atendimentos/:id',(req,res)=>{
- db.run('DELETE FROM atendimentos WHERE id=?',
- [req.params.id],
- ()=>res.json({ok:true}));
+// UPDATE
+app.put("/atendimentos/:id", (req, res) => {
+
+    const { status } = req.body;
+
+    db.run(
+        `
+        UPDATE atendimentos
+        SET status = ?
+        WHERE id = ?
+        `,
+        [status, req.params.id],
+
+        function(err){
+
+            if(err){
+                return res.status(500).json(err);
+            }
+
+            res.json({
+                sucesso:true
+            });
+        }
+    );
+
 });
 
-app.listen(3000,()=>console.log('Servidor rodando'));
+// DELETE
+app.delete("/atendimentos/:id", (req, res) => {
+
+    db.run(
+        `
+        DELETE FROM atendimentos
+        WHERE id = ?
+        `,
+        [req.params.id],
+
+        function(err){
+
+            if(err){
+                return res.status(500).json(err);
+            }
+
+            res.json({
+                sucesso:true
+            });
+        }
+    );
+
+});
+
+app.listen(3000, () => {
+
+    console.log(
+        "Servidor rodando em http://localhost:3000"
+    );
+
+});
