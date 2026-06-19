@@ -1,0 +1,77 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#f5f5f5;
+}
+
+.site{
+    position:relative;
+    width:100%;
+    max-width:1024px;
+    margin:auto;
+}
+
+.site img{
+    width:100%;
+    display:block;
+}
+
+/* Botão ajuda */
+
+.btn-ajuda{
+    position:absolute;
+
+    top:328px;
+    left:52px;
+
+    width:255px;
+    height:65px;
+
+    display:block;
+}
+
+/* Atendimento anônimo */
+
+.btn-anonimo{
+    position:absolute;
+
+    top:328px;
+    left:322px;
+
+    width:255px;
+    height:65px;
+
+    display:block;
+}
+
+/* Instagram */
+
+.instagram{
+    position:absolute;
+
+    bottom:22px;
+    left:300px;
+
+    width:340px;
+    height:65px;
+
+    display:block;
+}
+
+/* QR Code */
+
+.pesquisa{
+    position:absolute;
+
+    top:1000px;
+    right:65px;
+
+    width:130px;
+    height:130px;
+
+    display:block;
+}

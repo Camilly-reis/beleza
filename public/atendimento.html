@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atendimento Anônimo</title>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            background:#f5f5f5;
+            padding:40px;
+        }
+
+        form{
+            max-width:500px;
+            margin:auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+        }
+
+        input,
+        select,
+        textarea{
+            width:100%;
+            padding:10px;
+            margin-top:10px;
+            margin-bottom:15px;
+        }
+
+        button{
+            background:#e91e63;
+            color:white;
+            border:none;
+            padding:12px;
+            width:100%;
+            cursor:pointer;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h1>Atendimento Anônimo</h1>
+
+<form id="formulario">
+
+    <input type="number" id="idade" placeholder="Idade">
+
+    <input type="text" id="cidade" placeholder="Cidade">
+
+    <select id="tipo">
+
+        <option>Psicológica</option>
+        <option>Física</option>
+        <option>Moral</option>
+        <option>Patrimonial</option>
+
+    </select>
+
+    <textarea
+    id="descricao"
+    placeholder="Descreva sua situação">
+    </textarea>
+
+    <select id="risco">
+
+        <option>Sim</option>
+        <option>Não</option>
+
+    </select>
+
+    <button>
+        Enviar Solicitação
+    </button>
+
+</form>
+
+<script>
+
+document
+.getElementById("formulario")
+.addEventListener("submit", async (e)=>{
+
+    e.preventDefault();
+
+    await fetch(
+        "http://localhost:3000/atendimentos",
+        {
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+
+                idade:
+                document.getElementById("idade").value,
+
+                cidade:
+                document.getElementById("cidade").value,
+
+                tipo_violencia:
+                document.getElementById("tipo").value,
+
+                descricao:
+                document.getElementById("descricao").value,
+
+                risco:
+                document.getElementById("risco").value
+
+            })
+        }
+    );
+
+    alert("Solicitação enviada!");
+});
+
+</script>
+
+</body>
+
+</html>

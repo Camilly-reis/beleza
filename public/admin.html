@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head><meta charset="UTF-8"><title>Admin</title></head>
+<body>
+<h2>Painel Administrativo</h2>
+<table border="1">
+<thead><tr><th>ID</th><th>Cidade</th><th>Status</th></tr></thead>
+<tbody id="dados"></tbody>
+</table>
+<script>
+fetch('/atendimentos')
+.then(r=>r.json())
+.then(d=>{
+ let html='';
+ d.forEach(x=>html+=`<tr><td>${x.id}</td><td>${x.cidade}</td><td>${x.status}</td></tr>`);
+ document.getElementById('dados').innerHTML=html;
+});
+</script>
+</body>
+</html>
