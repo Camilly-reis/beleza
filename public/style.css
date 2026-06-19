@@ -21,7 +21,6 @@ body{
 }
 
 /* Botão ajuda */
-
 .btn-ajuda{
     position:absolute;
 
@@ -35,7 +34,6 @@ body{
 }
 
 /* Atendimento anônimo */
-
 .btn-anonimo{
     position:absolute;
 
@@ -48,8 +46,22 @@ body{
     display:block;
 }
 
-/* Instagram */
+/* Botão Assistência e Auxílios do Governo  */
+.btn-assistencia {
+    position:absolute;
 
+    /* Posicionado logo abaixo dos botões acima (328px + 65px de altura + um espaço) */
+    top:410px; 
+    left:52px;
+
+    /* Largura combinada para cobrir uma boa área ou se destacar */
+    width:525px; 
+    height:65px;
+
+    display:block;
+}
+
+/* Instagram */
 .instagram{
     position:absolute;
 
@@ -63,7 +75,6 @@ body{
 }
 
 /* QR Code */
-
 .pesquisa{
     position:absolute;
 
