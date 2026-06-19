@@ -69,18 +69,21 @@ app.post("/atendimentos", (req, res) => {
             "Pendente"
         ],
 
-        function(err){
+        function (err) {
 
-            if(err){
+            if (err) {
+                console.error(err);
 
-                console.log(err);
-
-                return res.status(500).json(err);
+                return res.status(500).json({
+                    sucesso: false,
+                    mensagem: "Erro ao cadastrar atendimento."
+                });
             }
 
-            res.json({
-                sucesso:true,
-                id:this.lastID
+            res.status(201).json({
+                sucesso: true,
+                mensagem: "Atendimento cadastrado com sucesso.",
+                id: this.lastID
             });
         }
     );
@@ -91,15 +94,42 @@ app.post("/atendimentos", (req, res) => {
 app.get("/atendimentos", (req, res) => {
 
     db.all(
-        "SELECT * FROM atendimentos",
+        "SELECT * FROM atendimentos ORDER BY id DESC",
         [],
         (err, rows) => {
 
-            if(err){
-                return res.status(500).json(err);
+            if (err) {
+                return res.status(500).json({
+                    sucesso: false,
+                    mensagem: "Erro ao listar atendimentos."
+                });
             }
 
             res.json(rows);
+        }
+    );
+
+});
+
+app.get("/atendimentos/:id", (req, res) => {
+
+    db.get(
+        "SELECT * FROM atendimentos WHERE id = ?",
+        [req.params.id],
+
+        (err, row) => {
+
+            if (err) {
+                return res.status(500).json(err);
+            }
+
+            if (!row) {
+                return res.status(404).json({
+                    mensagem: "Atendimento não encontrado."
+                });
+            }
+
+            res.json(row);
         }
     );
 
@@ -124,10 +154,22 @@ app.put("/atendimentos/:id", (req, res) => {
                 return res.status(500).json(err);
             }
 
+            if(this.changes === 0){
+
+                return res.status(404).json({
+                    sucesso:false,
+                    mensagem:"Atendimento não encontrado."
+                });
+
+            }
+
             res.json({
-                sucesso:true
+                sucesso:true,
+                mensagem:"Status atualizado com sucesso."
             });
+
         }
+
     );
 
 });
@@ -148,10 +190,22 @@ app.delete("/atendimentos/:id", (req, res) => {
                 return res.status(500).json(err);
             }
 
+            if(this.changes === 0){
+
+                return res.status(404).json({
+                    sucesso:false,
+                    mensagem:"Atendimento não encontrado."
+                });
+
+            }
+
             res.json({
-                sucesso:true
+                sucesso:true,
+                mensagem:"Atendimento excluído com sucesso."
             });
+
         }
+
     );
 
 });

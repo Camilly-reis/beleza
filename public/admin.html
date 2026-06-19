@@ -160,22 +160,84 @@ document.getElementById('formCadastroManual').addEventListener('submit', functio
     });
 });
 
-// UPDATE - Enviar novo status
-function atualizarStatus(id, novoStatus) {
-    fetch(`/atendimentos/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: novoStatus })
-    })
-    .then(() => carregarAtendimentos());
+/// UPDATE - Alterar status
+async function atualizarStatus(id, novoStatus) {
+
+    try {
+
+        const resposta = await fetch(`http://localhost:3000/atendimentos/${id}`, {
+
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                status: novoStatus
+            })
+
+        });
+
+        const resultado = await resposta.json();
+
+        if (!resposta.ok) {
+            throw new Error(resultado.mensagem);
+        }
+
+        alert(resultado.mensagem);
+
+        carregarAtendimentos();
+
+    }
+    catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao atualizar o status.");
+
+    }
+
 }
 
-// DELETE - Apagar do banco
-function deletarRegistro(id) {
-    if (confirm(`Tem certeza que deseja excluir o atendimento #${id}?`)) {
-        fetch(`/atendimentos/${id}`, { method: 'DELETE' })
-        .then(() => carregarAtendimentos());
+// DELETE - Excluir atendimento
+async function deletarRegistro(id) {
+
+    const confirmar = confirm(
+        `Deseja realmente excluir o atendimento #${id}?`
+    );
+
+    if (!confirmar) {
+        return;
     }
+
+    try {
+
+        const resposta = await fetch(`http://localhost:3000/atendimentos/${id}`, {
+
+            method: "DELETE"
+
+        });
+
+        const resultado = await resposta.json();
+
+        if (!resposta.ok) {
+            throw new Error(resultado.mensagem);
+        }
+
+        alert(resultado.mensagem);
+
+        carregarAtendimentos();
+
+    }
+    catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao excluir atendimento.");
+
+    }
+
 }
 
 window.onload = carregarAtendimentos;
