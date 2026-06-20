@@ -4,15 +4,15 @@ const cors = require("cors");
 
 const app = express();
 
-// Permitir requisições do Live Server
+
 app.use(cors());
 
-// Receber JSON
+
 app.use(express.json());
 
 const db = new sqlite3.Database("./database.db");
 
-// Criar tabela
+
 db.serialize(() => {
 
     db.run(`
@@ -36,7 +36,7 @@ db.serialize(() => {
 
 });
 
-// CREATE
+
 app.post("/atendimentos", (req, res) => {
 
     const {
@@ -46,6 +46,20 @@ app.post("/atendimentos", (req, res) => {
         descricao,
         risco
     } = req.body;
+
+
+    if(!idade || !cidade || !tipo_violencia){
+
+        return res.status(400).json({
+
+            sucesso:false,
+
+            mensagem:"Dados obrigatórios não enviados."
+
+        });
+
+    }
+
 
     db.run(
         `
@@ -69,28 +83,41 @@ app.post("/atendimentos", (req, res) => {
             "Pendente"
         ],
 
-        function (err) {
+        function(err){
 
-            if (err) {
+            if(err){
+
                 console.error(err);
 
                 return res.status(500).json({
-                    sucesso: false,
-                    mensagem: "Erro ao cadastrar atendimento."
+
+                    sucesso:false,
+
+                    mensagem:"Erro ao cadastrar."
+
                 });
+
             }
 
+
             res.status(201).json({
-                sucesso: true,
-                mensagem: "Atendimento cadastrado com sucesso.",
-                id: this.lastID
+
+                sucesso:true,
+
+                mensagem:"Atendimento cadastrado.",
+
+                id:this.lastID
+
             });
+
+
         }
+
     );
 
 });
 
-// READ
+
 app.get("/atendimentos", (req, res) => {
 
     db.all(
@@ -135,7 +162,7 @@ app.get("/atendimentos/:id", (req, res) => {
 
 });
 
-// UPDATE
+
 app.put("/atendimentos/:id", (req, res) => {
 
     const { status } = req.body;
@@ -174,7 +201,7 @@ app.put("/atendimentos/:id", (req, res) => {
 
 });
 
-// DELETE
+
 app.delete("/atendimentos/:id", (req, res) => {
 
     db.run(

@@ -7,7 +7,6 @@ if (formLogin) {
         const usuarioDigitado = document.getElementById('usuario').value;
         const senhaDigitada = document.getElementById('senha').value;
 
-        // Credenciais obrigatórias exigidas no roteiro
         if (usuarioDigitado === 'admin' && senhaDigitada === '123456') {
             localStorage.setItem('admin_logado', 'true');
             window.location.href = 'admin.html';

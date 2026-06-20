@@ -2,246 +2,408 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atendimento Anônimo</title>
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
+<meta charset="UTF-8">
 
-        body{
-            font-family:Arial, sans-serif;
-            background:#f5f5f5;
-            padding:40px;
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        h1{
-            text-align:center;
-            margin-bottom:20px;
-        }
+<title>Atendimento Anônimo</title>
 
-        form{
-            max-width:500px;
-            margin:auto;
-            background:white;
-            padding:25px;
-            border-radius:10px;
-            box-shadow:0 0 10px rgba(0,0,0,0.1);
-        }
 
-        input,
-        select,
-        textarea{
-            width:100%;
-            padding:12px;
-            margin-bottom:15px;
-        }
+<style>
 
-        button{
-            width:100%;
-            padding:12px;
-            border:none;
-            background:#e91e63;
-            color:white;
-            font-size:16px;
-            cursor:pointer;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        button:hover{
-            opacity:0.9;
-        }
-    </style>
+
+body{
+
+    font-family:Arial, sans-serif;
+
+    background:#f5f5f5;
+
+    padding:40px;
+
+}
+
+
+h1{
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+}
+
+
+
+form{
+
+    max-width:500px;
+
+    margin:auto;
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:10px;
+
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+
+}
+
+
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-bottom:15px;
+
+    border:1px solid #ccc;
+
+    border-radius:5px;
+
+}
+
+
+
+button{
+
+    width:100%;
+
+    padding:12px;
+
+    border:none;
+
+    background:#e91e63;
+
+    color:white;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    border-radius:5px;
+
+}
+
+
+
+button:hover{
+
+    opacity:0.9;
+
+}
+
+
+
+</style>
+
+
 </head>
+
+
 
 <body>
 
-    <h1>Atendimento Anônimo</h1>
 
-    <form id="formulario">
+<h1>
+Atendimento Anônimo
+</h1>
 
-        <input
-            type="number"
-            id="idade"
-            placeholder="Idade"
-            required>
 
-        <input
-            type="text"
-            id="cidade"
-            placeholder="Cidade"
-            required>
 
-        <select id="tipo" required>
-            <option value="">Selecione o tipo de violência</option>
-            <option>Psicológica</option>
-            <option>Física</option>
-            <option>Moral</option>
-            <option>Patrimonial</option>
-            <option>Sexual</option>
-        </select>
 
-        <textarea
-            id="descricao"
-            rows="5"
-            placeholder="Descreva sua situação">
-        </textarea>
+<form id="formulario">
 
-        <select id="risco" required>
-            <option value="">Risco imediato?</option>
-            <option>Sim</option>
-            <option>Não</option>
-        </select>
 
-        <button type="submit">
-            Enviar Solicitação
-        </button>
+<input
 
-    </form>
+type="number"
 
-    <script>
+id="idade"
 
-        console.log("Script carregado");
+placeholder="Idade"
 
-        const formulario =
-        document.getElementById("formulario");
+required>
 
-        formulario.addEventListener("submit", async function(e){
 
-            e.preventDefault();
 
-            console.log("Botão clicado");
+<input
 
-            const dados = {
+type="text"
 
-                idade:
-                document.getElementById("idade").value,
+id="cidade"
 
-                cidade:
-                document.getElementById("cidade").value,
+placeholder="Cidade"
 
-                tipo_violencia:
-                document.getElementById("tipo").value,
+required>
 
-                descricao:
-                document.getElementById("descricao").value,
 
-                risco:
-                document.getElementById("risco").value
-            };
 
-            console.log(dados);
 
-            try{
+<select id="tipo" required>
 
-                const resposta =
-                await fetch(
-                    "http://localhost:3000/atendimentos",
-                    {
-                        method:"POST",
 
-                        headers:{
-                            "Content-Type":"application/json"
-                        },
+<option value="">
+Selecione o tipo de violência
+</option>
 
-                        body:JSON.stringify(dados)
-                    }
-                );
 
-                const resultado =
-                await resposta.json();
+<option value="Psicológica">
+Psicológica
+</option>
 
-                console.log(resultado);
 
-                alert("Solicitação enviada com sucesso!");
+<option value="Física">
+Física
+</option>
 
-                formulario.reset();
 
-            }
-            catch(erro){
+<option value="Moral">
+Moral
+</option>
 
-                console.error(erro);
 
-                alert(
-                    "Erro ao enviar. Verifique se o servidor está rodando."
-                );
-            }
+<option value="Patrimonial">
+Patrimonial
+</option>
 
-        });
 
-    </script>
-    <script>
+<option value="Sexual">
+Sexual
+</option>
 
-        document
-        .getElementById("formulario")
-        .addEventListener("submit", async function(e){
-        
-            e.preventDefault();
-        
-            const dados = {
-        
-                idade:
-                document.getElementById("idade").value,
-        
-                cidade:
-                document.getElementById("cidade").value,
-        
-                tipo_violencia:
-                document.getElementById("tipo").value,
-        
-                descricao:
-                document.getElementById("descricao").value,
-        
-                risco:
-                document.getElementById("risco").value
-            };
-        
-            try{
-        
-                const resposta =
-                await fetch(
-                    "http://localhost:3000/atendimentos",
-                    {
-                        method:"POST",
-        
-                        headers:{
-                            "Content-Type":"application/json"
-                        },
-        
-                        body:JSON.stringify(dados)
-                    }
-                );
-        
-                const resultado =
-                await resposta.json();
-        
-                console.log(resultado);
-        
-                alert(
-                    "Solicitação enviada com sucesso!"
-                );
-        
-                document
-                .getElementById("formulario")
-                .reset();
-        
-            }
-            catch(erro){
-        
-                console.error(erro);
-        
-                alert(
-                    "Erro ao enviar solicitação."
-                );
-            }
-        
-        });
-        
-        </script>
+
+</select>
+
+
+
+
+
+<textarea
+
+id="descricao"
+
+rows="5"
+
+placeholder="Descreva sua situação">
+
+</textarea>
+
+
+
+
+
+<select id="risco" required>
+
+
+<option value="">
+Existe risco imediato?
+</option>
+
+
+<option value="Alto">
+Sim - risco imediato
+</option>
+
+
+<option value="Baixo">
+Não
+</option>
+
+
+</select>
+
+
+
+
+
+<button type="submit">
+
+Enviar Solicitação
+
+</button>
+
+
+
+</form>
+
+
+
+
+
+
+
+<script>
+
+
+const formulario = document.getElementById("formulario");
+
+
+
+formulario.addEventListener("submit", async function(e){
+
+
+e.preventDefault();
+
+
+
+const dados = {
+
+
+idade:
+
+Number(
+document.getElementById("idade").value
+),
+
+
+
+cidade:
+
+document.getElementById("cidade").value,
+
+
+
+tipo_violencia:
+
+document.getElementById("tipo").value,
+
+
+
+descricao:
+
+document.getElementById("descricao").value,
+
+
+
+risco:
+
+document.getElementById("risco").value
+
+
+};
+
+
+
+
+console.log("Dados enviados:");
+
+console.log(dados);
+
+
+
+
+
+try{
+
+
+const resposta = await fetch(
+
+"http://localhost:3000/atendimentos",
+
+{
+
+
+method:"POST",
+
+
+headers:{
+
+
+"Content-Type":"application/json"
+
+
+},
+
+
+body:JSON.stringify(dados)
+
+
+}
+
+);
+
+
+
+
+const resultado = await resposta.json();
+
+
+
+console.log(resultado);
+
+
+
+
+if(resposta.ok){
+
+
+alert(
+"Solicitação enviada com sucesso!"
+);
+
+
+
+formulario.reset();
+
+
+
+}
+
+else{
+
+
+alert(
+"Erro ao enviar solicitação."
+);
+
+
+
+}
+
+
+
+}
+
+catch(erro){
+
+
+console.error(erro);
+
+
+
+alert(
+
+"Erro ao enviar. Verifique se o servidor está rodando."
+
+);
+
+
+
+}
+
+
+
+});
+
+
+
+</script>
+
+
 
 </body>
+
 
 </html>

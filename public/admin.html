@@ -1,246 +1,236 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Administrativo - Beleza que Acolhe</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-light">
 
-<script>
-    if (localStorage.getItem('admin_logado') !== 'true') {
-        window.location.href = 'login.html';
-    }
-</script>
+    <script>
+        if (localStorage.getItem("admin_logado") !== "true") {
+            window.location.href = "login.html";
+        }
+    </script>
 
-<nav class="navbar navbar-dark bg-dark mb-4 shadow-sm">
-    <div class="container">
-        <span class="navbar-brand fw-bold">Painel Administrativo</span>
-        <button class="btn btn-sm btn-outline-danger" onclick="efetuarLogout()">Sair</button>
-    </div>
-</nav>
+    <nav class="navbar navbar-dark bg-dark mb-4 shadow-sm">
+        <div class="container">
+            <span class="navbar-brand fw-bold">Painel Administrativo</span>
+            <button class="btn btn-sm btn-outline-danger" onclick="efetuarLogout()">Sair</button>
+        </div>
+    </nav>
 
-<div class="container mb-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="h4 fw-bold text-secondary">Fila de Atendimentos</h2>
-        <button class="btn btn-success fw-semibold" data-bs-toggle="modal" data-bs-target="#modalNovoAtendimento">+ Novo Atendimento Manual</button>
-    </div>
+    <div class="container mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="h4 fw-bold text-secondary">Fila de Atendimentos</h2>
+            <button class="btn btn-success fw-semibold" data-bs-toggle="modal" data-bs-target="#modalNovoAtendimento">
+                + Novo Atendimento Manual
+            </button>
+        </div>
 
-    <div class="card border-0 shadow-sm rounded-3">
-        <div class="table-responsive p-3">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-light text-secondary small text-uppercase">
-                    <tr>
-                        <th>ID</th>
-                        <th>Idade</th>
-                        <th>Cidade</th>
-                        <th>Tipo Violência</th>
-                        <th>Descrição</th>
-                        <th>Risco</th>
-                        <th>Status</th>
-                        <th class="text-center">Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="dados">
-                    </tbody>
-            </table>
+        <div class="card border-0 shadow-sm">
+            <div class="table-responsive p-3">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Idade</th>
+                            <th>Cidade</th>
+                            <th>Tipo Violência</th>
+                            <th>Descrição</th>
+                            <th>Risco</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dados">
+                        </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="modalNovoAtendimento" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-success text-white">
-                <h5 class="modal-title fw-bold">Cadastrar Atendimento</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="formCadastroManual">
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-4">
-                            <label class="form-label small fw-bold">Idade</label>
-                            <input type="number" class="form-control" id="formIdade" required>
-                        </div>
-                        <div class="col-md-8">
-                            <label class="form-label small fw-bold">Cidade</label>
-                            <input type="text" class="form-control" id="formCidade" required>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold">Tipo de Violência</label>
-                        <input type="text" class="form-control" id="formTipo" required placeholder="Ex: Física, Psicológica">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold">Descrição</label>
-                        <textarea class="form-control" id="formDescricao" rows="3" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold">Risco</label>
-                        <select class="form-select" id="formRisco" required>
+    <div class="modal fade" id="modalNovoAtendimento">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Cadastrar Atendimento</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formCadastroManual">
+                        <label class="fw-bold">Idade</label>
+                        <input type="number" id="formIdade" class="form-control mb-3" required>
+
+                        <label class="fw-bold">Cidade</label>
+                        <input type="text" id="formCidade" class="form-control mb-3" required>
+
+                        <label class="fw-bold">Tipo de Violência</label>
+                        <input type="text" id="formTipo" class="form-control mb-3" required>
+
+                        <label class="fw-bold">Descrição</label>
+                        <textarea id="formDescricao" class="form-control mb-3" required></textarea>
+
+                        <label class="fw-bold">Risco</label>
+                        <select id="formRisco" class="form-select mb-3" required>
                             <option value="Baixo">Baixo</option>
                             <option value="Médio">Médio</option>
                             <option value="Alto">Alto</option>
                         </select>
-                    </div>
-                    <button type="submit" class="btn btn-success w-100 py-2 fw-semibold">Salvar Registro</button>
-                </form>
+
+                        <button class="btn btn-success w-100">Salvar Registro</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-// Mantendo as funções na mesma página para garantir a comunicação direta com o back-end
-function efetuarLogout() {
-    localStorage.removeItem('admin_logado');
-    window.location.href = 'login.html';
-}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const URL_API = "http://localhost:3000";
 
-// READ - Listar registros
-function carregarAtendimentos() {
-    fetch('/atendimentos')
-    .then(r => r.json())
-    .then(dados => {
-        let html = '';
-        dados.forEach(x => {
-            const badgeRisco = x.risco === 'Alto' ? 'bg-danger' : x.risco === 'Médio' ? 'bg-warning text-dark' : 'bg-info';
-            
-            html += `
-                <tr>
-                    <td class="fw-bold">#${x.id}</td>
-                    <td>${x.idade || 'N/A'} anos</td>
-                    <td>${x.cidade}</td>
-                    <td><span class="badge bg-light text-dark border">${x.tipo_violencia || 'Geral'}</span></td>
-                    <td>${x.descricao || 'Sem descrição'}</td>
-                    <td><span class="badge ${badgeRisco}">${x.risco || 'Baixo'}</span></td>
-                    <td>
-                        <select class="form-select form-select-sm fw-semibold" onchange="atualizarStatus(${x.id}, this.value)">
-                            <option value="Pendente" ${x.status === 'Pendente' ? 'selected' : ''}>Pendente</option>
-                            <option value="Em atendimento" ${x.status === 'Em atendimento' ? 'selected' : ''}>Em atendimento</option>
-                            <option value="Encaminhado" ${x.status === 'Encaminhado' ? 'selected' : ''}>Encaminhado</option>
-                            <option value="Finalizado" ${x.status === 'Finalizado' ? 'selected' : ''}>Finalizado</option>
-                        </select>
-                    </td>
-                    <td class="text-center">
-                        <button class="btn btn-sm btn-outline-danger" onclick="deletarRegistro(${x.id})">Excluir</button>
-                    </td>
-                </tr>`;
-        });
-        document.getElementById('dados').innerHTML = html;
-    });
-}
-
-// CREATE - Cadastro manual
-document.getElementById('formCadastroManual').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const novoAtendimento = {
-        idade: parseInt(document.getElementById('formIdade').value),
-        cidade: document.getElementById('formCidade').value,
-        tipo_violencia: document.getElementById('formTipo').value,
-        descricao: document.getElementById('formDescricao').value,
-        risco: document.getElementById('formRisco').value,
-        status: "Pendente"
-    };
-
-    fetch('/atendimentos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(novoAtendimento)
-    })
-    .then(res => {
-        if (res.ok) {
-            bootstrap.Modal.getInstance(document.getElementById('modalNovoAtendimento')).hide();
-            document.getElementById('formCadastroManual').reset();
-            carregarAtendimentos();
-        }
-    });
-});
-
-/// UPDATE - Alterar status
-async function atualizarStatus(id, novoStatus) {
-
-    try {
-
-        const resposta = await fetch(`http://localhost:3000/atendimentos/${id}`, {
-
-            method: "PUT",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-                status: novoStatus
-            })
-
-        });
-
-        const resultado = await resposta.json();
-
-        if (!resposta.ok) {
-            throw new Error(resultado.mensagem);
+        
+        function efetuarLogout() {
+            localStorage.removeItem("admin_logado");
+            window.location.href = "login.html";
         }
 
-        alert(resultado.mensagem);
+        async function carregarAtendimentos() {
+            try {
+                const resposta = await fetch(`${URL_API}/atendimentos`);
+                const dados = await resposta.json();
+                let html = "";
 
-        carregarAtendimentos();
+                dados.forEach(x => {
+                    let corRisco = "bg-info";
+                    if (x.risco === "Alto") {
+                        corRisco = "bg-danger";
+                    } else if (x.risco === "Médio") {
+                        corRisco = "bg-warning text-dark";
+                    }
 
-    }
-    catch (erro) {
+                    html += `
+                    <tr>
+                        <td>#${x.id}</td>
+                        <td>${x.idade || "-"} anos</td>
+                        <td>${x.cidade}</td>
+                        <td>${x.tipo_violencia}</td>
+                        <td>${x.descricao || "-"}</td>
+                        <td>
+                            <span class="badge ${corRisco}">${x.risco}</span>
+                        </td>
+                        <td>
+                            <select class="form-select form-select-sm" onchange="atualizarStatus(${x.id}, this.value)">
+                                <option value="Pendente" ${x.status === "Pendente" ? "selected" : ""}>Pendente</option>
+                                <option value="Em atendimento" ${x.status === "Em atendimento" ? "selected" : ""}>Em atendimento</option>
+                                <option value="Encaminhado" ${x.status === "Encaminhado" ? "selected" : ""}>Encaminhado</option>
+                                <option value="Finalizado" ${x.status === "Finalizado" ? "selected" : ""}>Finalizado</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" onclick="deletarRegistro(${x.id})">Excluir</button>
+                        </td>
+                    </tr>
+                    `;
+                });
 
-        console.error(erro);
-
-        alert("Erro ao atualizar o status.");
-
-    }
-
-}
-
-// DELETE - Excluir atendimento
-async function deletarRegistro(id) {
-
-    const confirmar = confirm(
-        `Deseja realmente excluir o atendimento #${id}?`
-    );
-
-    if (!confirmar) {
-        return;
-    }
-
-    try {
-
-        const resposta = await fetch(`http://localhost:3000/atendimentos/${id}`, {
-
-            method: "DELETE"
-
-        });
-
-        const resultado = await resposta.json();
-
-        if (!resposta.ok) {
-            throw new Error(resultado.mensagem);
+                document.getElementById("dados").innerHTML = html;
+            } catch (erro) {
+                console.error(erro);
+                alert("Erro ao carregar atendimentos. Verifique o servidor.");
+            }
         }
 
-        alert(resultado.mensagem);
+        document.getElementById("formCadastroManual").addEventListener("submit", async function (e) {
+            e.preventDefault();
 
-        carregarAtendimentos();
+            const dados = {
+                idade: Number(document.getElementById("formIdade").value),
+                cidade: document.getElementById("formCidade").value,
+                tipo_violencia: document.getElementById("formTipo").value,
+                descricao: document.getElementById("formDescricao").value,
+                risco: document.getElementById("formRisco").value,
+                status: "Pendente" 
+            };
 
-    }
-    catch (erro) {
+            try {
+                const resposta = await fetch(`${URL_API}/atendimentos`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dados)
+                });
 
-        console.error(erro);
+                const resultado = await resposta.json();
 
-        alert("Erro ao excluir atendimento.");
+                if (resposta.ok) {
+                    alert("Atendimento cadastrado com sucesso!");
+                    document.getElementById("formCadastroManual").reset();
+                    
+                    const modalElement = document.getElementById("modalNovoAtendimento");
+                    const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+                    modal.hide();
 
-    }
+                    carregarAtendimentos();
+                } else {
+                    alert(resultado.mensagem || "Erro ao cadastrar atendimento.");
+                }
+            } catch (erro) {
+                console.error(erro);
+                alert("Servidor não encontrado.");
+            }
+        });
 
-}
+        async function atualizarStatus(id, status) {
+            try {
+                const resposta = await fetch(`${URL_API}/atendimentos/${id}`, {
+                    method: "PUT", 
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ status: status })
+                });
 
-window.onload = carregarAtendimentos;
-</script>
+                const resultado = await resposta.json();
+
+                if (resposta.ok) {
+                    alert("Status atualizado!");
+                    carregarAtendimentos();
+                } else {
+                    alert(resultado.mensagem || "Erro ao atualizar status.");
+                }
+            } catch (erro) {
+                console.error(erro);
+                alert("Erro ao atualizar status.");
+            }
+        }
+
+        
+        async function deletarRegistro(id) {
+            const confirmar = confirm("Deseja excluir este atendimento?");
+            if (!confirmar) return;
+
+            try {
+                const resposta = await fetch(`${URL_API}/atendimentos/${id}`, {
+                    method: "DELETE"
+                });
+
+                let resultado = {};
+                try { resultado = await resposta.json(); } catch(e) {}
+
+                if (resposta.ok) {
+                    alert("Atendimento excluído!");
+                    carregarAtendimentos();
+                } else {
+                    alert(resultado.mensagem || "Erro ao excluir atendimento.");
+                }
+            } catch (erro) {
+                console.error(erro);
+                alert("Erro ao excluir atendimento.");
+            }
+        }
+
+        window.onload = carregarAtendimentos;
+    </script>
 </body>
 </html>

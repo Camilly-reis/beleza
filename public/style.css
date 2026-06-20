@@ -20,7 +20,6 @@ body{
     display:block;
 }
 
-/* Botão ajuda */
 .btn-ajuda{
     position:absolute;
 
@@ -33,7 +32,6 @@ body{
     display:block;
 }
 
-/* Atendimento anônimo */
 .btn-anonimo{
     position:absolute;
 
@@ -46,20 +44,33 @@ body{
     display:block;
 }
 
-/* Botão Assistência e Auxílios do Governo  */
 .btn-assistencia {
     position:absolute;
 
-    /* Posicionado logo abaixo dos botões acima (328px + 65px de altura + um espaço) */
-    top:410px; 
-    left:52px;
+    top:1275px; 
+    left:710px;
 
-    /* Largura combinada para cobrir uma boa área ou se destacar */
-    width:525px; 
-    height:65px;
+    width:200px; 
+    height:25px;
 
-    display:block;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background-color:#f51d89; 
+    color:#fff; 
+    text-decoration:none; 
+    font-size:12px;
+    font-weight:bold;
+    border-radius:5px;
+
+    z-index:10;
+
+    transition:0.3s;
 }
+
+.btn-assistencia:hover {
+    background-color:#0056b3; 
+}   
 
 /* Instagram */
 .instagram{
@@ -74,7 +85,58 @@ body{
     display:block;
 }
 
-/* QR Code */
+.btn-violencia{
+    position:absolute;
+
+    top:940px;
+    left:110px;
+
+    width:110px;
+    height:30px;
+
+    display:block;
+}
+
+
+.btn-lei-maria-da-penha{
+    position:absolute;
+
+    top:940px;
+    left:360px;
+
+    width:110px;
+    height:30px;
+
+    display:block;
+}
+
+
+.btn-como-pedir-ajuda{
+    position:absolute;
+
+    top:940px;
+    left:615px;
+
+    width:110px;
+    height:30px;
+
+    display:block;
+}
+
+
+.btn-perguntas-frequentes{
+    position:absolute;
+
+    top:940px;
+    left:865px;
+
+    width:110px;
+    height:30px;
+
+    display:block;
+}
+
+
 .pesquisa{
     position:absolute;
 
